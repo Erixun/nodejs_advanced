@@ -1,5 +1,6 @@
 // import cluster from 'cluster';
 import express from 'express';
+import crypto from 'crypto';
 
 // console.log(cluster.isPrimary); //.isMaster);
 // //Is the file being executed in primary mode?
@@ -13,16 +14,23 @@ import express from 'express';
 
 const app = express();
 
-function doWork(duration) {
-  const start = Date.now();
-  while (Date.now() - start < duration) {}
-}
+// function doWork(duration) {
+//   const start = Date.now();
+//   while (Date.now() - start < duration) {}
+// }
 
 app.get('/', (req, res) => {
   // Simulate a long running process
   // Will block the event loop
-  doWork(5000);
-  res.send('Hello World!');
+  // doWork(5000);
+  crypto.pbkdf2('a', 'b', 100000, 512, 'sha512', () => {
+    // console.log('1:', Date.now() - start);
+    res.send('Hello World!');
+  });
+});
+
+app.get('/fast', (req, res) => {
+  res.send('This was fast!');
 });
 
 export default app;
