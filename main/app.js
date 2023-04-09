@@ -1,7 +1,5 @@
-// import cluster from 'cluster';
 import express from 'express';
 import { Worker } from 'worker_threads';
-// const { Worker } = require('worker_threads');
 
 const app = express();
 
